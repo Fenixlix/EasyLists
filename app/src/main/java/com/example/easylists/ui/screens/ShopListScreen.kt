@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.screens
+package com.example.easylists.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,11 +13,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.easylists.R
-import com.example.easylists.model.ShopItem
-import com.example.easylists.ui.theme.decorative_comp.PrettyVerticalWideSpacer
-import com.example.easylists.ui.theme.interactive_comp.ItemInputBar
-import com.example.easylists.ui.theme.interactive_comp.PromotionSelectBar
-import com.example.easylists.ui.theme.interactive_comp.ShoppingListItem
+import com.example.easylists.model.data_types.ShopItem
+import com.example.easylists.ui.decorative_comp.PrettyVerticalWideSpacer
+import com.example.easylists.ui.interactive_comp.ItemInputBar
+import com.example.easylists.ui.interactive_comp.PromotionSelectBar
+import com.example.easylists.ui.interactive_comp.ShoppingListItem
 import java.lang.NumberFormatException
 
 // A shop list oriented screen with a promotion select bar and auto summary

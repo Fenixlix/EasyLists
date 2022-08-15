@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.screens
+package com.example.easylists.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,31 +8,35 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.easylists.R
-import com.example.easylists.model.TodoItem
-import com.example.easylists.ui.theme.interactive_comp.ItemInputBar
-import com.example.easylists.ui.theme.interactive_comp.TodoListItem
+import com.example.easylists.model.data_types.TodoItem
+import com.example.easylists.ui.interactive_comp.ItemInputBar
+import com.example.easylists.ui.interactive_comp.TodoListItem
+import com.example.easylists.viewmodel.TodoViewModel
 
 @Composable
-fun TodoListScreen() {
+fun TodoListScreen(todoViewModel: TodoViewModel = hiltViewModel()) {
 
     val (todoTask, onTaskChange) = remember { mutableStateOf("") }
-    val taskList = remember { mutableStateListOf<TodoItem>() }
+
+    val taskList = todoViewModel.todoItemList
 
     fun addTask(task: String) {
-        taskList.add(TodoItem(task = task))
+        todoViewModel.addTask(TodoItem(task = task))
+    }
+
+    fun checkTask(task : TodoItem){
+        todoViewModel.check(task.copy(isChecked = task.isChecked.not()))
     }
 
     fun deleteTask(task: TodoItem) {
-        taskList.remove(task)
+        todoViewModel.deleteTask(task)
     }
 
     Column(
@@ -63,6 +67,7 @@ fun TodoListScreen() {
             items(taskList) { task ->
                 TodoListItem(
                     task = task,
+                    onCheck = {checkTask(it)},
                     onClickDelete = { deleteTask(it) })
             }
         }

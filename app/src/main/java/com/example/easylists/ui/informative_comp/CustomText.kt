@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.informative_comp
+package com.example.easylists.ui.informative_comp
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text

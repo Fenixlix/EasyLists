@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.interactive_comp
+package com.example.easylists.ui.interactive_comp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,13 +13,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.easylists.R
-import com.example.easylists.model.TodoItem
-import com.example.easylists.ui.theme.informative_comp.CustomText
+import com.example.easylists.model.data_types.TodoItem
+import com.example.easylists.ui.informative_comp.CustomText
 
 @Composable
 fun TodoListItem(
     task: TodoItem,
     modifier: Modifier = Modifier,
+    onCheck: (TodoItem) -> Unit,
     onClickDelete: (TodoItem) -> Unit
 ) {
     Row(
@@ -45,12 +46,12 @@ fun TodoListItem(
         )
 
         Checkbox(
-            checked = task.isChecked.value,
+            checked = task.isChecked,
             modifier = Modifier
                 .weight(0.1f),
-            onCheckedChange = { task.isChecked.value = task.isChecked.value.not() })
+            onCheckedChange = { onCheck(task) })
 
-        if (task.isChecked.value)
+        if (task.isChecked)
             Box(modifier = Modifier.weight(0.1f)) {
                 CustomIconButton(
                     painter = painterResource(id = R.drawable.ic_delete_24),

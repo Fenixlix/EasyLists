@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.interactive_comp
+package com.example.easylists.ui.interactive_comp
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.easylists.R
-import com.example.easylists.ui.theme.informative_comp.CustomText
+import com.example.easylists.ui.informative_comp.CustomText
 
 @Composable
 fun SimListItem(

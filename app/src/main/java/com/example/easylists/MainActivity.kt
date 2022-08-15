@@ -6,13 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.easylists.model.Screens
+import com.example.easylists.model.data_types.Screens
 import com.example.easylists.ui.theme.EasyListsTheme
-import com.example.easylists.ui.theme.screens.MainScreen
-import com.example.easylists.ui.theme.screens.ShopListScreen
-import com.example.easylists.ui.theme.screens.SimpleListScreen
-import com.example.easylists.ui.theme.screens.TodoListScreen
+import com.example.easylists.ui.screens.MainScreen
+import com.example.easylists.ui.screens.ShopListScreen
+import com.example.easylists.ui.screens.SimpleListScreen
+import com.example.easylists.ui.screens.TodoListScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

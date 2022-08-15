@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.interactive_comp
+package com.example.easylists.ui.interactive_comp
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image

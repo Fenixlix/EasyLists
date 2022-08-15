@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.screens
+package com.example.easylists.ui.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.easylists.R
-import com.example.easylists.model.Screens
-import com.example.easylists.ui.theme.interactive_comp.ScreenCard
+import com.example.easylists.model.data_types.Screens
+import com.example.easylists.ui.interactive_comp.ScreenCard
 
 // The main screen of the app, with cards for select which type of list to use
 @OptIn(ExperimentalFoundationApi::class)

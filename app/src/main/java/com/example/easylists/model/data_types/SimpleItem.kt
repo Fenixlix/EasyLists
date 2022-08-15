@@ -1,4 +1,4 @@
-package com.example.easylists.model
+package com.example.easylists.model.data_types
 
 import androidx.compose.runtime.MutableState
 

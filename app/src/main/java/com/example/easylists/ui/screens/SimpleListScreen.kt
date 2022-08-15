@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.screens
+package com.example.easylists.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.easylists.R
-import com.example.easylists.model.SimpleItem
-import com.example.easylists.ui.theme.interactive_comp.ItemInputBar
-import com.example.easylists.ui.theme.interactive_comp.SimListItem
+import com.example.easylists.model.data_types.SimpleItem
+import com.example.easylists.ui.interactive_comp.ItemInputBar
+import com.example.easylists.ui.interactive_comp.SimListItem
 
 // An item count list oriented screen with multiple items counts and title
 @Composable

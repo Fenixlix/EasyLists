@@ -1,4 +1,4 @@
-package com.example.easylists.model
+package com.example.easylists.model.data_types
 
 sealed class Screens(val route: String, val title: String) {
     object MainScreen : Screens(route = "main_screen", title = "Main")
@@ -6,3 +6,4 @@ sealed class Screens(val route: String, val title: String) {
     object ItemList : Screens(route = "item_list_screen", title = "Items")
     object TodoList : Screens(route = "todo_list_screen", title = "To do")
 }
+// todo: add the individual logos for the main screen

@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.decorative_comp
+package com.example.easylists.ui.decorative_comp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer

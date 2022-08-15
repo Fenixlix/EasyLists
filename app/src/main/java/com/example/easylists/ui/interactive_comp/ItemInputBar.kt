@@ -1,4 +1,4 @@
-package com.example.easylists.ui.theme.interactive_comp
+package com.example.easylists.ui.interactive_comp
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.example.easylists.ui.theme.decorative_comp.PrettyVerticalWideSpacer
+import com.example.easylists.ui.decorative_comp.PrettyVerticalWideSpacer
 
 // ----- COMPOSABLE FOR THE INPUT OF THE DATA BY THE USER -----
 @Composable
