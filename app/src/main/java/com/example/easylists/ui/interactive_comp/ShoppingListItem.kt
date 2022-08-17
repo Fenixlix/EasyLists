@@ -23,8 +23,8 @@ fun ShoppingListItem(
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.Normal,
     totItems: Int? = null,
-    buttonDrawable: Painter? = null,
-    onButtonClick: () -> Unit
+    buttonDrawable : Painter? = null,
+    onButtonClick : () -> Unit
 ) {
     Row(
         modifier = modifier

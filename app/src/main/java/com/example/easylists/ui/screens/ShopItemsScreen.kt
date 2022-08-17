@@ -14,15 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.easylists.R
 import com.example.easylists.model.data_types.ShopItem
+import com.example.easylists.model.data_types.ShopMultiItem
 import com.example.easylists.ui.decorative_comp.PrettyVerticalWideSpacer
-import com.example.easylists.ui.interactive_comp.ItemInputBar
-import com.example.easylists.ui.interactive_comp.PromotionSelectBar
-import com.example.easylists.ui.interactive_comp.ShoppingListItem
+import com.example.easylists.ui.interactive_comp.*
 import java.lang.NumberFormatException
 
-// A shop list oriented screen with a promotion select bar and auto summary
 @Composable
-fun ShopListScreen() {
+fun ShopItemsScreen(){
 
     // ----- Parameters related to the promotion bar -----
     val promotion = listOf(
@@ -33,35 +31,41 @@ fun ShopListScreen() {
     // ----- Parameters related to the shop list -----
     val (component, onComponentChange) = remember { mutableStateOf("") }
     val (componentValue, onValueChange) = remember { mutableStateOf(0.0f) }
-    val componentsList = remember { mutableStateListOf<ShopItem>() }
     val (totalValue, refreshTotalValue) = remember { mutableStateOf(0.0f) }
+    val (totalQuantity, refreshTotalQuantity) = remember { mutableStateOf(0) }
 
-    // ----- Functions for the manipulation of the data in the list -----
-    fun refreshTotal() {
-        //totalValue = 0.0f
-        //componentsList.forEach { totalValue += it.value }
-        var vesselPriceVariable = 0.0
-        componentsList.forEach {
-            vesselPriceVariable += it.value
-        }
-        refreshTotalValue(vesselPriceVariable.toFloat())
-    }
+    val shopMultiItemList = remember { mutableStateListOf<ShopMultiItem>() }
 
+    // ----- Control functions for the different processes in the screen -----
     fun addComponent() {
-        componentsList.add(
-            ShopItem(
+        shopMultiItemList.add(
+            ShopMultiItem(
                 name = component,
-                value = componentValue * promotion[currentPromotion],
+                price = componentValue * promotion[currentPromotion],
+                quantity = mutableStateOf(1),
                 promotionCode = currentPromotion
             )
         )
-        refreshTotal()
+        refreshTotalQuantity(totalQuantity+1)
+        refreshTotalValue(totalValue+componentValue)
         onComponentChange("")
         onValueChange(0.0f)
     }
 
-    fun deleteComponent(selectedItem: ShopItem) {
-        componentsList.remove(selectedItem)
+    fun upCount(selectedItem : ShopMultiItem){
+        selectedItem.quantity.value += 1
+        refreshTotalQuantity(totalQuantity+1)
+        refreshTotalValue(totalValue + selectedItem.price)
+    }
+
+    fun downCount(selectedItem: ShopMultiItem) {
+        if (selectedItem.quantity.value == 0) {
+            shopMultiItemList.remove(selectedItem)
+        } else {
+            selectedItem.quantity.value -= 1
+            refreshTotalQuantity(totalQuantity-1)
+            refreshTotalValue(totalValue - selectedItem.price)
+        }
     }
 
     Column(
@@ -69,6 +73,8 @@ fun ShopListScreen() {
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
+
+
         PromotionSelectBar(
             promotions = promotion,
             currentPromotion = currentPromotion,
@@ -104,14 +110,12 @@ fun ShopListScreen() {
                 .padding(4.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            items(componentsList) {
-                ShoppingListItem(
+            items(shopMultiItemList) {
+                ShopMultiItemList(
                     listItem = it,
-                    buttonDrawable = painterResource(id = R.drawable.ic_delete_24)
-                ) {
-                    deleteComponent(it)
-                    refreshTotal()
-                }
+                    onUpButtonClick = {upCount(it)},
+                    onDownButtonClick = {downCount(it)}
+                )
             }
         }
 
@@ -122,9 +126,9 @@ fun ShopListScreen() {
             listItem = ShopItem(name = "Total", value = totalValue, -1),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            totItems = componentsList.size,
+            totItems = totalQuantity,
             buttonDrawable = null
         ) {}
     }
-}
 
+}

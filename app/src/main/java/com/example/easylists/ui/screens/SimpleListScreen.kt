@@ -19,20 +19,25 @@ import com.example.easylists.ui.interactive_comp.SimListItem
 @Composable
 fun SimpleListScreen() {
 
-    // Parameters related to the item list
+    // ----- Parameters related to the item list -----
     val (element, onElementChange) = remember { mutableStateOf("") }
-    val (count, onCountChange) = remember { mutableStateOf(0) }
+    val (count, onCountChange) = remember { mutableStateOf(1) }
     val itemsList = remember { mutableStateListOf<SimpleItem>() }
 
-    // Functions for the manipulation of the data in the list
+    // ----- Functions for the manipulation of the data in the list -----
     fun addComponent() {
-        if (element.isNotEmpty() && count >= 0)
-            itemsList.add(SimpleItem(name = element, count = mutableStateOf(count)))
+        itemsList.add(SimpleItem(name = element, count = mutableStateOf(count)))
+        onCountChange(0)
         onElementChange("")
     }
 
-    fun deleteComponent(selectedItem: SimpleItem) {
-        itemsList.remove(selectedItem)
+    fun upCount(SelectedItem : SimpleItem){
+        SelectedItem.count.value += 1
+    }
+
+    fun downCount(selectedItem: SimpleItem) {
+        if (selectedItem.count.value == 0) itemsList.remove(selectedItem)
+        else selectedItem.count.value -= 1
     }
 
     Column(
@@ -49,17 +54,14 @@ fun SimpleListScreen() {
             fieldValue = count.toString(),
             fieldTextPlaceholder = "New Item",
             onTextChange = {
-                onCountChange(1)
                 onElementChange(it)
             },
             onValueChange = {
                 if (it.isNotEmpty()) onCountChange(it.toInt())
             },
-            buttonEnabler = element.isNotEmpty(),
+            buttonEnabler = element.isNotEmpty() && count>=0,
             buttonDrawable = painterResource(id = R.drawable.ic_add_circle_outline_24),
-            onButtonClick = {
-                addComponent()
-            }
+            onButtonClick = { addComponent() }
         )
 
         //~~~~~ List with the different components
@@ -74,11 +76,8 @@ fun SimpleListScreen() {
                 SimListItem(
                     listItemName = it.name,
                     listItemCount = it.count.value,
-                    onUpButtonClick = { it.count.value += 1 },
-                    onDownButtonClick = {
-                        if (it.count.value == 1) deleteComponent(it)
-                        else it.count.value -= 1
-                    }
+                    onUpButtonClick = { upCount(it) },
+                    onDownButtonClick = { downCount(it) }
                 )
             }
         }

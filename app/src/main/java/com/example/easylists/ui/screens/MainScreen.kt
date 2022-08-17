@@ -22,7 +22,8 @@ import com.example.easylists.ui.interactive_comp.ScreenCard
 @Composable
 fun MainScreen(navController: NavController) {
 
-    val screenList = listOf(Screens.ShopList, Screens.ItemList, Screens.TodoList)
+    val screenList = Screens.values().drop(1)
+
     Surface(modifier = Modifier.background(MaterialTheme.colors.background)) {
         LazyVerticalGrid(
             cells = GridCells.Fixed(2),

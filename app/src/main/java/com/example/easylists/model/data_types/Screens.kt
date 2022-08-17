@@ -1,9 +1,10 @@
 package com.example.easylists.model.data_types
 
-sealed class Screens(val route: String, val title: String) {
-    object MainScreen : Screens(route = "main_screen", title = "Main")
-    object ShopList : Screens(route = "shop_list_screen", title = "Shopping")
-    object ItemList : Screens(route = "item_list_screen", title = "Items")
-    object TodoList : Screens(route = "todo_list_screen", title = "To do")
+enum class Screens(val route: String, val title: String) {
+    MainScreen(route = "main_screen", title = "Main"),
+    ShopList(route = "shop_list_screen", title = "Shopping"),
+    ItemList(route = "item_list_screen", title = "Items"),
+    TodoList(route = "todo_list_screen", title = "To do"),
+    ShopItemList(route = "shop_item_list_screen", title = "Shop+Items")
 }
 // todo: add the individual logos for the main screen
