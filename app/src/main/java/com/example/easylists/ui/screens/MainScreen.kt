@@ -3,6 +3,7 @@ package com.example.easylists.ui.screens
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -12,8 +13,8 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.easylists.R
 import com.example.easylists.model.data_types.Screens
 import com.example.easylists.ui.interactive_comp.ScreenCard
 
@@ -31,12 +32,13 @@ fun MainScreen(navController: NavController) {
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colors.background)
+                .background(color = MaterialTheme.colors.background),
+            contentPadding = PaddingValues(8.dp)
         ) {
             items(screenList) {
                 ScreenCard(
                     title = it.title,
-                    painter = painterResource(id = R.drawable.app_easy_lists_ico),
+                    painter = painterResource(id = it.icon),
                     contentDescription = it.title
                 ) {
                     navController.navigate(it.route)

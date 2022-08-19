@@ -1,11 +1,9 @@
 package com.example.easylists.ui.interactive_comp
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -19,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 // ----- Composable for the main screen grid of screens cards buttons
 @Composable
@@ -27,23 +26,21 @@ fun ScreenCard(
     painter: Painter,
     contentDescription: String,
     modifier: Modifier = Modifier,
-    onCardClick: () -> Unit
+    onItemClick: () -> Unit
 ) {
     Card(
-        modifier = modifier
-            .fillMaxSize()
-            .width(200.dp)
-            .height(200.dp)
-            .padding(8.dp)
-            .clickable { onCardClick() },
-        elevation = 8.dp,
-        shape = MaterialTheme.shapes.medium.copy(all = CornerSize(16.dp))
+        modifier = modifier.padding(8.dp),
+        backgroundColor = MaterialTheme.colors.secondaryVariant,
+        shape = CutCornerShape(topStart = 12.dp, bottomEnd = 12.dp)
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(color = MaterialTheme.colors.secondaryVariant)
-                .padding(4.dp),
+                .padding(4.dp)
+                .size(200.dp)
+                .background(MaterialTheme.colors.background,
+                    shape = CutCornerShape(topStart = 12.dp, bottomEnd = 12.dp))
+                .padding(8.dp)
+                .clickable { onItemClick() },
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -60,6 +57,8 @@ fun ScreenCard(
                     text = title,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colors.primary,
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
