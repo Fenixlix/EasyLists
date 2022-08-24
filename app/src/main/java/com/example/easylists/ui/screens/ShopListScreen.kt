@@ -18,6 +18,7 @@ import com.example.easylists.ui.decorative_comp.PrettyVerticalWideSpacer
 import com.example.easylists.ui.interactive_comp.ItemInputBar
 import com.example.easylists.ui.interactive_comp.PromotionSelectBar
 import com.example.easylists.ui.interactive_comp.ShoppingListItem
+import com.example.easylists.ui.interactive_comp.ValueModDialog
 import java.lang.NumberFormatException
 
 // A shop list oriented screen with a promotion select bar and auto summary
@@ -36,13 +37,18 @@ fun ShopListScreen() {
     val componentsList = remember { mutableStateListOf<ShopItem>() }
     val (totalValue, refreshTotalValue) = remember { mutableStateOf(0.0f) }
 
+    // ----- Parameters for the control of the AlertDialog -----
+    val showDialog = remember { mutableStateOf(false) }
+    val itemToUpdate = remember { mutableStateOf(ShopItem(
+        "",0.0f, 0)) }
+
     // ----- Functions for the manipulation of the data in the list -----
     fun refreshTotal() {
         //totalValue = 0.0f
         //componentsList.forEach { totalValue += it.value }
         var vesselPriceVariable = 0.0
         componentsList.forEach {
-            vesselPriceVariable += it.value
+            vesselPriceVariable += it.price
         }
         refreshTotalValue(vesselPriceVariable.toFloat())
     }
@@ -51,7 +57,7 @@ fun ShopListScreen() {
         componentsList.add(
             ShopItem(
                 name = component,
-                value = componentValue * promotion[currentPromotion],
+                price = componentValue * promotion[currentPromotion],
                 promotionCode = currentPromotion
             )
         )
@@ -63,6 +69,27 @@ fun ShopListScreen() {
     fun deleteComponent(selectedItem: ShopItem) {
         componentsList.remove(selectedItem)
     }
+
+    fun updateTotValue() {
+        var newTotValueVessel = 0.0f
+        componentsList.forEach {
+            newTotValueVessel += it.price
+        }
+        refreshTotalValue(newTotValueVessel)
+    }
+
+    // ----- Alert Dialog -----
+    ValueModDialog(
+        showDialog = showDialog.value,
+        itemValue = itemToUpdate.value.price,
+        onDismiss = { showDialog.value = false },
+        onOkClick = {
+            componentsList[componentsList.indexOf(itemToUpdate.value)] =
+                itemToUpdate.value.copy(price = it)
+            updateTotValue()
+            showDialog.value = false
+        }
+    )
 
     Column(
         modifier = Modifier
@@ -107,11 +134,16 @@ fun ShopListScreen() {
             items(componentsList) {
                 ShoppingListItem(
                     listItem = it,
-                    buttonDrawable = painterResource(id = R.drawable.ic_delete_24)
-                ) {
-                    deleteComponent(it)
-                    refreshTotal()
-                }
+                    buttonDrawable = painterResource(id = R.drawable.ic_delete_24),
+                    onButtonClick = {
+                        deleteComponent(it)
+                        refreshTotal()
+                    },
+                    onValueClick = { modValueItem ->
+                        itemToUpdate.value = modValueItem
+                        showDialog.value = true
+                    }
+                )
             }
         }
 
@@ -119,12 +151,14 @@ fun ShopListScreen() {
 
         //~~~~~ Resume of the list value and total items
         ShoppingListItem(
-            listItem = ShopItem(name = "Total", value = totalValue, -1),
+            listItem = ShopItem(name = "Total", price = totalValue, -1),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             totItems = componentsList.size,
-            buttonDrawable = null
-        ) {}
+            buttonDrawable = null,
+            onButtonClick = {},
+            onValueClick = {}
+        )
     }
 }
 

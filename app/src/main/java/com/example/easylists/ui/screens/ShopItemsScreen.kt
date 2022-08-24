@@ -36,6 +36,12 @@ fun ShopItemsScreen(){
 
     val shopMultiItemList = remember { mutableStateListOf<ShopMultiItem>() }
 
+    // ----- Parameters for the control of the AlertDialog -----
+    val showDialog = remember { mutableStateOf(false) }
+    val itemToUpdate = remember { mutableStateOf( ShopMultiItem(
+        "",0.0f, mutableStateOf(0), 0)) }
+
+
     // ----- Control functions for the different processes in the screen -----
     fun addComponent() {
         shopMultiItemList.add(
@@ -67,6 +73,27 @@ fun ShopItemsScreen(){
             refreshTotalValue(totalValue - selectedItem.price)
         }
     }
+
+    fun updateTotValue(){
+        var newTotValueVessel = 0.0f
+        shopMultiItemList.forEach {
+            newTotValueVessel += it.price*it.quantity.value
+        }
+        refreshTotalValue(newTotValueVessel)
+    }
+
+    // ----- Alert Dialog -----
+    ValueModDialog(
+        showDialog = showDialog.value,
+        itemValue = itemToUpdate.value.price,
+        onDismiss = {showDialog.value = false},
+        onOkClick = {
+            shopMultiItemList[shopMultiItemList.indexOf(itemToUpdate.value)] =
+                itemToUpdate.value.copy(price = it)
+            updateTotValue()
+            showDialog.value = false
+        }
+    )
 
     Column(
         modifier = Modifier
@@ -114,7 +141,11 @@ fun ShopItemsScreen(){
                 ShopMultiItemList(
                     listItem = it,
                     onUpButtonClick = {upCount(it)},
-                    onDownButtonClick = {downCount(it)}
+                    onDownButtonClick = {downCount(it)},
+                    onValueClick = { modValueItem ->
+                        itemToUpdate.value = modValueItem
+                        showDialog.value = true
+                    }
                 )
             }
         }
@@ -123,12 +154,14 @@ fun ShopItemsScreen(){
 
         //~~~~~ Resume of the list value and total items
         ShoppingListItem(
-            listItem = ShopItem(name = "Total", value = totalValue, -1),
+            listItem = ShopItem(name = "Total", price = totalValue, -1),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             totItems = totalQuantity,
-            buttonDrawable = null
-        ) {}
+            buttonDrawable = null,
+            onButtonClick = {},
+            onValueClick = {}
+        )
     }
 
 }

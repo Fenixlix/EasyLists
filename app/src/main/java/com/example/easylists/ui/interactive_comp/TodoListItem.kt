@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,24 +32,26 @@ fun TodoListItem(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         CustomText(
-            text = "-}>  ${task.task}",
+            text = task.task,
             modifier = Modifier
                 .fillMaxWidth(0.8f)
                 .background(
                     brush = Brush.horizontalGradient(
                         0.0f to MaterialTheme.colors.background,
-                        0.8f to MaterialTheme.colors.secondaryVariant.copy(alpha = 0.6f),
-                        1.0f to MaterialTheme.colors.secondary
-                    ), shape = CircleShape
-                )
-                .padding(8.dp),
+                        0.1f to MaterialTheme.colors.background,
+                        0.8f to MaterialTheme.colors.secondaryVariant.copy(alpha = 0.5f),
+                        1.0f to MaterialTheme.colors.secondary),
+                    shape = CircleShape)
+                .padding(8.dp)
+                .padding(end = 12.dp),
             textAlign = TextAlign.Justify
         )
 
         Checkbox(
             checked = task.isChecked,
             modifier = Modifier
-                .weight(0.1f),
+                .weight(0.1f)
+                .scale(1.2f),
             onCheckedChange = { onCheck(task) })
 
         if (task.isChecked)

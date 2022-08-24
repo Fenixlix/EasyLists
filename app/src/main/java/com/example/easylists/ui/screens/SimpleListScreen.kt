@@ -21,7 +21,7 @@ fun SimpleListScreen() {
 
     // ----- Parameters related to the item list -----
     val (element, onElementChange) = remember { mutableStateOf("") }
-    val (count, onCountChange) = remember { mutableStateOf(1) }
+    val (count, onCountChange) = remember { mutableStateOf(0) }
     val itemsList = remember { mutableStateListOf<SimpleItem>() }
 
     // ----- Functions for the manipulation of the data in the list -----

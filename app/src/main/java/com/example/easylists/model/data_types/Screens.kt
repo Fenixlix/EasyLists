@@ -7,5 +7,5 @@ enum class Screens(val route: String, val title: String, val icon: Int) {
     ShopList(route = "shop_list_screen", title = "Shopping", R.drawable.shop_list_ico),
     ItemList(route = "item_list_screen", title = "Items", R.drawable.item_list_ico),
     ShopItemList(route = "shop_item_list_screen", title = "Shop+Items", R.drawable.shop_plus_list_ico),
-    TodoList(route = "todo_list_screen", title = "To do", R.drawable.todo_list_ico)
+    TodoList(route = "todo_list_screen", title = "To Do", R.drawable.todo_list_ico)
 }

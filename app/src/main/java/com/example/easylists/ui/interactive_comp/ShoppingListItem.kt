@@ -1,6 +1,7 @@
 package com.example.easylists.ui.interactive_comp
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -24,7 +25,8 @@ fun ShoppingListItem(
     fontWeight: FontWeight = FontWeight.Normal,
     totItems: Int? = null,
     buttonDrawable : Painter? = null,
-    onButtonClick : () -> Unit
+    onButtonClick : () -> Unit,
+    onValueClick : (ShopItem) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -58,8 +60,10 @@ fun ShoppingListItem(
 
         // Component value
         CustomText(
-            text = "$ ${listItem.value}",
-            modifier = Modifier.weight(0.4f),
+            text = "$ ${listItem.price}",
+            modifier = Modifier
+                .weight(0.4f)
+                .clickable { onValueClick(listItem) },
             fontSize = fontSize,
             fontWeight = fontWeight
         )

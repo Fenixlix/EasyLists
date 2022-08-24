@@ -57,16 +57,14 @@ fun SimListItem(
         CustomIconButton(
             painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
             description = "A Button for add a count to this item",
-            click = {
-                onUpButtonClick()
-            })
+            click = { onUpButtonClick() })
 
         // Down count button
         CustomIconButton(
-            painter = painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
+            painter = painterResource(
+                id = if(listItemCount > 0) R.drawable.ic_baseline_arrow_downward_24
+                else R.drawable.ic_delete_24),
             description = "A Button for reduce this item count",
-            click = {
-                onDownButtonClick()
-            })
+            click = { onDownButtonClick() })
     }
 }
