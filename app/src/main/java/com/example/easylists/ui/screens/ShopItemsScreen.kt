@@ -5,7 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,9 +23,7 @@ import java.lang.NumberFormatException
 fun ShopItemsScreen(){
 
     // ----- Parameters related to the promotion bar -----
-    val promotion = listOf(
-        1f, 0.85f, 0.80f, 0.75f, 0.50f, 0.25f
-    )
+    val promotion = listOf(1f, 0.85f, 0.80f, 0.75f, 0.50f, 0.25f)
     var currentPromotion by remember { mutableStateOf(0) }
 
     // ----- Parameters related to the shop list -----
@@ -100,8 +98,6 @@ fun ShopItemsScreen(){
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
-
-
         PromotionSelectBar(
             promotions = promotion,
             currentPromotion = currentPromotion,

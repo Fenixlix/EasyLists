@@ -10,6 +10,7 @@ val Teal200 = Color(0xFF03DAC5)
 val BlueSea = Color(0xFF70B4FC)
 val BlueSeaVariant = Color(0xFF50A5FF)
 val GreenGrass = Color(0xFF8AFC70)
+val DarkGreenGrass = Color(0xFF057451)
 
 val PromotionColors = listOf(
     Color(0xFF929292),
