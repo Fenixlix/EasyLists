@@ -2,9 +2,10 @@
 
 This is a simple to use yet really convenient app for the creation of different types of lists.
 
-<br> The UI was made using **Jetpack Compose**
-<br> For the data management I use the **Room library**
-<br> It implements the **MVVM** arquitectur
+* The UI was made using **Jetpack Compose**
+* For the data management I use the **Room library**
+* It implements the **MVVM** architecture 
+* Also uses **Dagger Hilt** for a better scalability 
 
 ## Screenshots 
   This are some examples of the different types of list that have the app 
