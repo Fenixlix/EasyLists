@@ -1,5 +1,6 @@
 package com.example.easylists.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -116,7 +117,7 @@ fun ShopItemsScreen(){
                 try {
                     onValueChange(it.toFloat())
                 } catch (e: NumberFormatException) {
-
+                    Log.e("ShopItem", "ShopItemsScreen: ${e.message}")
                 }
             },
             buttonEnabler = component.isNotEmpty(),
