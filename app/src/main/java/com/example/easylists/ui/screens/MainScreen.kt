@@ -1,13 +1,12 @@
 package com.example.easylists.ui.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -18,16 +17,16 @@ import androidx.navigation.NavController
 import com.example.easylists.model.data_types.Screens
 import com.example.easylists.ui.interactive_comp.ScreenCard
 
-// The main screen of the app, with cards for select which type of list to use
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(navController: NavController) {
 
-    val screenList = Screens.values().drop(1)
+    // Drop the first 2 items of the Screen enum list
+    // that correspond to the splash and the main screen
+    val screenList = Screens.values().drop(2)
 
     Surface(modifier = Modifier.background(MaterialTheme.colors.background)) {
         LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
+            columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
