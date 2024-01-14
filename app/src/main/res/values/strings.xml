@@ -3,4 +3,15 @@
 
     <!--  Screens strings  -->
     <string name="splash_screen_description">Splash screen icon</string>
+    <string name="new_item_placeholder">" ~ New Item ~ "</string>
+    <string name="item_name_placeholder">" ~ Item Name ~ "</string>
+    <string name="value_0.0_placeholder">" $ 0.0 "</string>
+    <string name="total_price">" Total price :"</string>
+
+    <!--  Components Description  -->
+    <string name="up_button">"A Button for add a count to this item"</string>
+    <string name="down_button">"A Button for reduce this item
+        count or delete it if count equals to 0"</string>
+
+
 </resources>

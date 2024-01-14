@@ -6,9 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.easylists.model.data_types.Screens
-import com.example.easylists.ui.screens.*
-import com.example.easylists.ui.theme.EasyListsTheme
+import com.example.easylists.core_model.data_types.Screens
+import com.example.easylists.core_ui.screens.*
+import com.example.easylists.core_ui.theme.EasyListsTheme
+import com.example.easylists.screen_item_list.ui.screens.SimpleListScreen
+import com.example.easylists.screen_shop_list.ui.screens.ShopListScreen
+import com.example.easylists.screen_shop_multi_item_list.ui.screens.ShopItemsScreen
+import com.example.easylists.screen_todo_list.ui.screens.TodoListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
