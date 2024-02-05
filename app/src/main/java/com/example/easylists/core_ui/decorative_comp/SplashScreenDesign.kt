@@ -17,23 +17,25 @@ import com.example.easylists.R
 
 @Composable
 fun SplashScreenDesign() {
-   Box(
-       Modifier
-           .fillMaxSize()
-           .background(color = Color.Black),
-   contentAlignment = Alignment.Center) {
-       Image(
-           modifier = Modifier
-               .aspectRatio(1f)
-               .fillMaxSize()
-               .padding(30.dp),
-           painter = painterResource(id = R.drawable.splash_screen_icon),
-           contentDescription = R.string.splash_screen_description.toString())
-   }
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(color = Color.Black),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            modifier = Modifier
+                .aspectRatio(1f)
+                .fillMaxSize()
+                .padding(30.dp),
+            painter = painterResource(id = R.drawable.splash_screen_icon),
+            contentDescription = R.string.splash_screen_description.toString()
+        )
+    }
 }
 
 @Preview
 @Composable
-private fun Prev(){
+private fun Prev() {
     SplashScreenDesign()
 }

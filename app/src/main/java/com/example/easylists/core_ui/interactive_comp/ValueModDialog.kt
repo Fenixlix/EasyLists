@@ -3,21 +3,25 @@ package com.example.easylists.core_ui.interactive_comp
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import com.example.easylists.R
 import com.example.easylists.core_ui.informative_comp.CustomText
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ValueModDialog(
     showDialog: Boolean,
@@ -26,8 +30,11 @@ fun ValueModDialog(
     onDismiss: () -> Unit,
     onOkClick: (Float) -> Unit,
 ) {
+
     if (showDialog) {
         val itemVal = remember { mutableStateOf(itemValue) }
+        val keyboardController = LocalSoftwareKeyboardController.current
+
         AlertDialog(
             onDismissRequest = { onDismiss() },
             modifier = modifier
@@ -47,7 +54,7 @@ fun ValueModDialog(
                     contentAlignment = Alignment.Center
                 ) {
                     CustomText(
-                        text = "Write the new value",
+                        text = stringResource(id = R.string.dialog_title),
                         textAlign = TextAlign.Center,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.ExtraBold
@@ -75,7 +82,8 @@ fun ValueModDialog(
                         },
                         textAlign = TextAlign.Center,
                         placeholder = "",
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        keyboardType =  KeyboardType.Number,
+                        keyboardController = keyboardController
                     )
                 }
             },
@@ -90,7 +98,7 @@ fun ValueModDialog(
                         onClick = { onOkClick(itemVal.value) },
                     ) {
                         CustomText(
-                            text = "OK",
+                            text = stringResource(id = R.string.dialog_ok_button),
                             fontWeight = FontWeight.ExtraBold,
                             color = MaterialTheme.colors.background
                         )

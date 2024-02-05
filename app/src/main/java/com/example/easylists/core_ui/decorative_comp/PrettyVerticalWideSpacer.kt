@@ -20,13 +20,14 @@ fun PrettyVerticalWideSpacer(modifier: Modifier = Modifier, height : Dp = 4.dp){
     Spacer(modifier = modifier
         .fillMaxWidth()
         .height(finalHeight)
-        .background(brush = Brush.horizontalGradient(
-            0.0f to MaterialTheme.colors.background,
-            0.2f to MaterialTheme.colors.primary,
-            0.8f to MaterialTheme.colors.secondary,
-            1.0f to MaterialTheme.colors.background)
+        .background(
+            brush = Brush.horizontalGradient(
+                0.0f to MaterialTheme.colors.background,
+                0.2f to MaterialTheme.colors.primary,
+                0.8f to MaterialTheme.colors.secondary,
+                1.0f to MaterialTheme.colors.background
+            )
         )
     )
     Spacer(modifier = modifier.height(finalHeight))
 }
-

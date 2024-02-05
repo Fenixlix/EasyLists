@@ -3,19 +3,20 @@ package com.example.easylists.core_ui.interactive_comp
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.easylists.core_ui.decorative_comp.PrettyVerticalWideSpacer
+import com.example.easylists.R
 
 // ----- COMPOSABLE FOR THE INPUT OF THE DATA BY THE USER -----
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ItemInputBar(
     fieldText: String,
@@ -28,6 +29,8 @@ fun ItemInputBar(
     buttonDrawable: Painter,
     onButtonClick: () -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,31 +45,26 @@ fun ItemInputBar(
     ) {
         // ~~~~~ Name of the Item
         InputTextField(
+            modifier = Modifier.weight(2f),
             fieldText = fieldText,
             onTextChange = { onTextChange(it) },
             placeholder = fieldTextPlaceholder,
-            modifier = Modifier.weight(2f)
+            keyboardController = keyboardController
         )
 
         // ~~~~~ Value of the Item
         if (fieldValue != null)
             InputTextField(
+                modifier = Modifier.weight(1f),
                 fieldText = if (fieldValue == "0.0") "" else fieldValue,
                 onTextChange = { onValueChange?.invoke(it) },
                 placeholder = fieldValuePlaceholder ?: "",
-                modifier = Modifier.weight(1f),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(onDone = {
-                    this.defaultKeyboardAction(ImeAction.Done)
-                })
+                keyboardController = keyboardController
             )
 
         // ~~~~~ Button for add the Item
         CustomIconButton(painter = buttonDrawable,
-            description = "Button for add a new element",
+            description = stringResource(id = R.string.add_button),
             buttonEnabler = buttonEnabler,
             click = { onButtonClick() })
     }

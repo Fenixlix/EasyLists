@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.easylists.R
@@ -50,7 +51,7 @@ fun TodoListScreen(todoListViewModel: TodoListViewModel = hiltViewModel()) {
         ItemInputBar(
             fieldText = todoTask,
             onTextChange = onTaskChange,
-            fieldTextPlaceholder = "New Task",
+            fieldTextPlaceholder = stringResource(id = R.string.new_task),
             fieldValue = null,
             onValueChange = null, buttonEnabler = todoTask.isNotEmpty(),
             buttonDrawable = painterResource(id = R.drawable.ic_add_circle_outline_24)

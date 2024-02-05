@@ -5,6 +5,7 @@
     <string name="splash_screen_description">Splash screen icon</string>
     <string name="new_item_placeholder">" ~ New Item ~ "</string>
     <string name="item_name_placeholder">" ~ Item Name ~ "</string>
+    <string name="new_task">" ~ New Task ~ "</string>
     <string name="value_0.0_placeholder">" $ 0.0 "</string>
     <string name="total_price">" Total price :"</string>
 
@@ -12,6 +13,12 @@
     <string name="up_button">"A Button for add a count to this item"</string>
     <string name="down_button">"A Button for reduce this item
         count or delete it if count equals to 0"</string>
+    <string name="add_button">Button for add a new element</string>
+    <string name="delete_button">A Button for delete the corresponding item</string>
+
+    <!-- Dialog strings -->
+    <string name="dialog_title">Write the new value</string>
+    <string name="dialog_ok_button">OK</string>
 
 
 </resources>

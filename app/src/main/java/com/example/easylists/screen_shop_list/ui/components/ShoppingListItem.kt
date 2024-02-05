@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -16,6 +17,7 @@ import com.example.easylists.screen_shop_list.model.data_types.ShopItem
 import com.example.easylists.core_ui.theme.PromotionColors
 import com.example.easylists.core_ui.informative_comp.CustomText
 import com.example.easylists.core_ui.interactive_comp.CustomIconButton
+import com.example.easylists.R
 
 // ----- COMPOSABLE FOR THE RESUME AND THE VARIOUS ITEMS OF THE LIST -----
 @Composable
@@ -73,7 +75,7 @@ fun ShoppingListItem(
         if (buttonDrawable != null) {
             CustomIconButton(
                 painter = buttonDrawable,
-                description = "A Button for delete this item",
+                description = stringResource(id = R.string.delete_button),
                 click = { onButtonClick() })
         }
     }

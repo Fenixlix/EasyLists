@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
@@ -94,7 +95,7 @@ fun ShopMultiItemList(
         // Up count button
         CustomIconButton(
             painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
-            description = "A Button for add a count to this item",
+            description = stringResource(id = R.string.up_button),
             click = { onUpButtonClick() })
 
         // Down count button
@@ -103,7 +104,7 @@ fun ShopMultiItemList(
                 id = if (listItem.quantity > 0) R.drawable.ic_baseline_arrow_downward_24
                 else R.drawable.ic_delete_24
             ),
-            description = "A Button for reduce this item count",
+            description = stringResource(id = R.string.down_button),
             click = { onDownButtonClick() })
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.easylists.R
@@ -41,8 +42,10 @@ fun TodoListItem(
                         0.0f to MaterialTheme.colors.background,
                         0.1f to MaterialTheme.colors.background,
                         0.8f to MaterialTheme.colors.secondaryVariant.copy(alpha = 0.5f),
-                        1.0f to MaterialTheme.colors.secondary),
-                    shape = CircleShape)
+                        1.0f to MaterialTheme.colors.secondary
+                    ),
+                    shape = CircleShape
+                )
                 .padding(8.dp)
                 .padding(end = 12.dp),
             textAlign = TextAlign.Justify
@@ -59,7 +62,7 @@ fun TodoListItem(
             Box(modifier = Modifier.weight(0.1f)) {
                 CustomIconButton(
                     painter = painterResource(id = R.drawable.ic_delete_24),
-                    description = "Button for delete task"
+                    description = stringResource(id = R.string.delete_button)
                 ) {
                     onClickDelete(task)
                 }
