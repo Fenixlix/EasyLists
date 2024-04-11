@@ -7,7 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.easylists.core_model.data_types.Screens
-import com.example.easylists.core_ui.screens.*
+import com.example.easylists.core_ui.screens.MainScreen
+import com.example.easylists.core_ui.screens.SplashScreen
 import com.example.easylists.core_ui.theme.EasyListsTheme
 import com.example.easylists.screen_item_list.ui.screens.SimpleListScreen
 import com.example.easylists.screen_shop_list.ui.screens.ShopListScreen
@@ -27,11 +28,14 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = Screens.SplashScreen.route
                 ) {
-                    composable(route = Screens.SplashScreen.route){
-                        SplashScreen(navController)
+                    composable(route = Screens.SplashScreen.route) {
+                        SplashScreen {
+                            navController.popBackStack()
+                            navController.navigate(Screens.MainScreen.route)
+                        }
                     }
                     composable(route = Screens.MainScreen.route) {
-                        MainScreen(navController)
+                        MainScreen { navController.navigate(it) }
                     }
                     composable(route = Screens.ShopList.route) {
                         ShopListScreen()
@@ -42,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screens.TodoList.route) {
                         TodoListScreen()
                     }
-                    composable(route = Screens.ShopItemList.route){
+                    composable(route = Screens.ShopItemList.route) {
                         ShopItemsScreen()
                     }
                 }
@@ -50,7 +54,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-
-

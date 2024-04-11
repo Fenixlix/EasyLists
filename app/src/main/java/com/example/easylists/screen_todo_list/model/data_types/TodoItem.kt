@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "todo_list_table")
 data class TodoItem(
-    @ColumnInfo(name = "task") val task : String,
-    @ColumnInfo(name = "is_checked") val isChecked : Boolean = false,
-    @PrimaryKey(autoGenerate = true) val id : Int = 0
+    @ColumnInfo(name = "task") val task: String,
+    @ColumnInfo(name = "is_checked") val isChecked: Boolean = false,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0
 )

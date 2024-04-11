@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
@@ -33,7 +36,7 @@ fun SimListItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(4.dp)
-            .border(1.dp, color = MaterialTheme.colors.secondary)
+            .border(1.dp, color = MaterialTheme.colorScheme.secondary)
             .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -57,16 +60,15 @@ fun SimListItem(
 
         // Up count button
         CustomIconButton(
-            painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
+            imageVector = Icons.Filled.KeyboardArrowUp,
             description = stringResource(id = R.string.up_button),
-            click = { onUpButtonClick() })
+            onClick = { onUpButtonClick() })
 
         // Down count button
         CustomIconButton(
-            painter = painterResource(
-                id = if(listItemCount > 0) R.drawable.ic_baseline_arrow_downward_24
-                else R.drawable.ic_delete_24),
+            imageVector = if (listItemCount > 0) Icons.Filled.KeyboardArrowDown
+            else Icons.Filled.Delete,
             description = stringResource(id = R.string.down_button),
-            click = { onDownButtonClick() })
+            onClick = { onDownButtonClick() })
     }
 }

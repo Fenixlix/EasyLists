@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,7 +34,7 @@ fun PromotionSelectBar(
             Text(text = " ${(-100 * promotions[x] + 100).toInt()}% ",
                 modifier = Modifier
                     .background(
-                        color = if (isSelected) PromotionColors[x] else MaterialTheme.colors.background,
+                        color = if (isSelected) PromotionColors[x] else MaterialTheme.colorScheme.background,
                         shape = CircleShape
                     )
                     .clickable { onClick(x) }

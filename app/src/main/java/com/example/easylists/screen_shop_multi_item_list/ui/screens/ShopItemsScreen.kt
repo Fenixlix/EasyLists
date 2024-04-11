@@ -1,49 +1,54 @@
 package com.example.easylists.screen_shop_multi_item_list.ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.easylists.R
-import com.example.easylists.screen_shop_list.model.data_types.ShopItem
-import com.example.easylists.screen_shop_multi_item_list.model.data_types.ShopMultiItem
 import com.example.easylists.core_ui.decorative_comp.PrettyVerticalWideSpacer
-import com.example.easylists.core_ui.interactive_comp.*
+import com.example.easylists.core_ui.interactive_comp.ItemInputBar
+import com.example.easylists.core_ui.interactive_comp.PromotionSelectBar
+import com.example.easylists.core_ui.interactive_comp.ValueModDialog
+import com.example.easylists.screen_shop_list.model.data_types.ShopItem
 import com.example.easylists.screen_shop_list.ui.components.ShoppingListItem
+import com.example.easylists.screen_shop_multi_item_list.model.data_types.ShopMultiItem
 import com.example.easylists.screen_shop_multi_item_list.ui.components.ShopMultiItemList
 import com.example.easylists.screen_shop_multi_item_list.viewmodel.ShopMultiItemListViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShopItemsScreen(shopMultiItemListViewModel: ShopMultiItemListViewModel = hiltViewModel()) {
 
-    // ----- ViewModel related -----
-    val shopMultiItemList = shopMultiItemListViewModel.shopMultiItemList.collectAsState()
-    val resumeState = shopMultiItemListViewModel.resumeState.collectAsState()
-
-    // ----- Parameters related to the promotion bar -----
-    val promotionOptionsList = listOf(1f, 0.85f, 0.80f, 0.75f, 0.50f, 0.25f)
-    var currentPromotion by remember { mutableStateOf(0) }
-
-    // ----- Parameters related to the shop list -----
-    val (shopItemName, onShopItemNameChange) = remember { mutableStateOf("") }
-    val (shopItemPrice, onShopItemPriceChange) = remember { mutableStateOf(0.0f) }
-
-    LaunchedEffect(key1 = true) {
-        shopMultiItemListViewModel.updateResume()
+    val state = shopMultiItemListViewModel.state.collectAsState()
+    val btnEnabler by remember {
+        derivedStateOf {
+            state.value.itemName.text.isNotEmpty() && state.value.itemPrice.text.isNotEmpty()
+        }
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     // ----- Parameters for the control of the AlertDialog -----
-    val showDialog = remember { mutableStateOf(false) }
     val itemToUpdate = remember {
         mutableStateOf(
             ShopMultiItem(
@@ -55,59 +60,38 @@ fun ShopItemsScreen(shopMultiItemListViewModel: ShopMultiItemListViewModel = hil
         )
     }
 
-    // ----- Control functions for the different processes in the screen -----
-    fun addComponent() {
-        shopMultiItemListViewModel.upsertShopMultiItem(
-            ShopMultiItem(
-                name = shopItemName,
-                price = shopItemPrice * promotionOptionsList[currentPromotion],
-                quantity = 1,
-                promotionCode = currentPromotion
-            )
-        )
-        onShopItemNameChange("")
-        onShopItemPriceChange(0.0f)
-    }
-
     // ----- Alert Dialog -----
     ValueModDialog(
-        showDialog = showDialog.value,
+        showDialog = state.value.showDialog,
         itemValue = itemToUpdate.value.price,
-        onDismiss = { showDialog.value = false },
+        onDismiss = { shopMultiItemListViewModel.toggleDialog() },
         onOkClick = {
             shopMultiItemListViewModel.updatePrice(
                 shopItem = itemToUpdate.value.copy(price = it),
                 previousPrice = itemToUpdate.value.price
             )
-            showDialog.value = false
+            shopMultiItemListViewModel.toggleDialog()
         }
     )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         PromotionSelectBar(
-            promotions = promotionOptionsList,
-            currentPromotion = currentPromotion,
-            onClick = { currentPromotion = it })
+            promotions = shopMultiItemListViewModel.promotion,
+            currentPromotion = state.value.discountPointer,
+            onClick = { shopMultiItemListViewModel.changePromotion(it) })
 
         //~~~~~ User input controls
         ItemInputBar(
-            fieldText = shopItemName,
-            fieldValue = shopItemPrice.toString(),
-            fieldTextPlaceholder = stringResource(id = R.string.item_name_placeholder),
-            fieldValuePlaceholder = stringResource(id = R.string.value_0_0_placeholder),
-            onTextChange = {
-                onShopItemNameChange(it)
-            },
-            onValueChange = {
-                onShopItemPriceChange(it.toFloat())
-            },
-            buttonEnabler = shopItemName.isNotEmpty(),
-            buttonDrawable = painterResource(id = R.drawable.ic_add_circle_outline_24),
-            onButtonClick = { addComponent() }
+            textField = state.value.itemName,
+            numberField = state.value.itemPrice,
+            buttonEnabler = btnEnabler,
+            textPlaceholder = stringResource(id = R.string.item_name_placeholder),
+            keyboardController = keyboardController,
+            onButtonClick = { shopMultiItemListViewModel.upsertShopMultiItem() }
         )
 
         //~~~~~ List with the different components
@@ -115,11 +99,11 @@ fun ShopItemsScreen(shopMultiItemListViewModel: ShopMultiItemListViewModel = hil
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.9f)
-                .border(2.dp, MaterialTheme.colors.secondaryVariant)
+                .border(2.dp, MaterialTheme.colorScheme.secondary)
                 .padding(4.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            items(shopMultiItemList.value) {
+            items(state.value.itemList) {
                 ShopMultiItemList(
                     listItem = it,
                     onUpButtonClick = {
@@ -129,16 +113,14 @@ fun ShopItemsScreen(shopMultiItemListViewModel: ShopMultiItemListViewModel = hil
                         )
                     },
                     onDownButtonClick = {
-                        if (it.quantity != 0)
                         shopMultiItemListViewModel.upDownCount(
                             shopItem = it,
                             isUpCount = false
                         )
-                        else shopMultiItemListViewModel.deleteShopMultiItem(it)
                     },
                     onValueClick = { modValueItem ->
                         itemToUpdate.value = modValueItem
-                        showDialog.value = true
+                        shopMultiItemListViewModel.toggleDialog()
                     }
                 )
             }
@@ -150,13 +132,13 @@ fun ShopItemsScreen(shopMultiItemListViewModel: ShopMultiItemListViewModel = hil
         ShoppingListItem(
             listItem = ShopItem(
                 name = stringResource(id = R.string.total_price),
-                price = resumeState.value.totPriceAmount,
+                price = state.value.totalPrice,
                 promotionCode = -1
             ),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            totItems = resumeState.value.totItemsInList,
-            buttonDrawable = null,
+            totItems = state.value.totalItems,
+            buttonIcon = null,
             onButtonClick = {},
             onValueClick = {}
         )

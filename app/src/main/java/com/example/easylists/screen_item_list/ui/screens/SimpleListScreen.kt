@@ -1,68 +1,62 @@
 package com.example.easylists.screen_item_list.ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.easylists.R
-import com.example.easylists.screen_item_list.model.data_types.SimpleItem
 import com.example.easylists.core_ui.interactive_comp.ItemInputBar
 import com.example.easylists.screen_item_list.ui.components.SimListItem
 import com.example.easylists.screen_item_list.viewmodel.ItemListViewModel
 
 // An item quantity list oriented screen
 //  With options to modify the amount and name of the items
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SimpleListScreen(itemListViewModel: ItemListViewModel = hiltViewModel()) {
+fun SimpleListScreen(
+    simpleListViewModel: ItemListViewModel = hiltViewModel()
+) {
 
-    // ----- ViewModel related -----
-    val itemList = itemListViewModel.itemList.collectAsState()
-
-    // ----- Parameters related to the item list -----
-    val (element, onElementChange) = remember { mutableStateOf("") }
-    val (count, onCountChange) = remember { mutableStateOf(0) }
-
-    // ----- Functions for the manipulation of the data in the list -----
-    fun addComponent() {
-        itemListViewModel.upsertItem(
-            SimpleItem(
-                name = element,
-                count = count
-            )
-        )
-        onCountChange(0)
-        onElementChange("")
+    val state = simpleListViewModel.screenState.collectAsState()
+    val buttonEnabler = remember {
+        derivedStateOf {
+            state.value.itemName.text.isNotEmpty()
+        }
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background)
+            .background(MaterialTheme.colorScheme.background)
             .padding(8.dp)
     )
     {
         //~~~~~ User input controls
         ItemInputBar(
-            fieldText = element,
-            fieldValue = count.toString(),
-            fieldTextPlaceholder = stringResource(id = R.string.new_item_placeholder),
-            onTextChange = {
-                onElementChange(it)
-            },
-            onValueChange = {
-                if (it.isNotEmpty()) onCountChange(it.toInt())
-            },
-            buttonEnabler = element.isNotEmpty() && count >= 0,
-            buttonDrawable = painterResource(id = R.drawable.ic_add_circle_outline_24),
-            onButtonClick = { addComponent() }
+            textField = state.value.itemName,
+            numberField = state.value.itemQuantity,
+            textPlaceholder = stringResource(id = R.string.item_name_placeholder),
+            buttonEnabler = buttonEnabler.value,
+            keyboardController = keyboardController,
+            onButtonClick = { simpleListViewModel.upsertItem() }
         )
 
         //~~~~~ List with the different components
@@ -70,27 +64,15 @@ fun SimpleListScreen(itemListViewModel: ItemListViewModel = hiltViewModel()) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.9f)
-                .border(2.dp, MaterialTheme.colors.secondaryVariant),
+                .border(2.dp, MaterialTheme.colorScheme.secondary),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            items(itemList.value) {
+            items(state.value.simpleItemList) {
                 SimListItem(
                     listItemName = it.name,
-                    listItemCount = it.count,
-                    onUpButtonClick = {
-                        itemListViewModel.upDownCount(
-                            item = it,
-                            isUpCount = true
-                        )
-                    },
-                    onDownButtonClick = {
-                        if (it.count != 0)
-                            itemListViewModel.upDownCount(
-                                item = it,
-                                isUpCount = false
-                            )
-                        else itemListViewModel.deleteItem(it)
-                    }
+                    listItemCount = it.quantity,
+                    onUpButtonClick = { simpleListViewModel.upDownCount(it, true) },
+                    onDownButtonClick = { simpleListViewModel.upDownCount(it, false) }
                 )
             }
         }

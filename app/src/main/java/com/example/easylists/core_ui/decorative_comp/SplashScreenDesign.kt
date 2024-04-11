@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.easylists.R
 
@@ -29,13 +28,7 @@ fun SplashScreenDesign() {
                 .fillMaxSize()
                 .padding(30.dp),
             painter = painterResource(id = R.drawable.splash_screen_icon),
-            contentDescription = R.string.splash_screen_description.toString()
+            contentDescription = null
         )
     }
-}
-
-@Preview
-@Composable
-private fun Prev() {
-    SplashScreenDesign()
 }
