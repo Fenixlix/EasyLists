@@ -3,6 +3,7 @@ package com.example.easylists.core_ui.interactive_comp
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -66,14 +67,16 @@ fun CustomInputTextField(
                         .height(2.dp)
                 )
 
-                if (textFieldState.text.isEmpty()) {
-                    Text(
-                        text = placeholder,
-                        color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
-                    )
-                } else {
+                Box {
                     textField()
+                    if (textFieldState.text.isEmpty()) {
+                        Text(
+                            text = placeholder,
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                        )
+                    }
                 }
+
                 Spacer(
                     modifier = Modifier
                         .background(color = MaterialTheme.colorScheme.secondary)
@@ -98,7 +101,10 @@ object MoneyInputTransformation : InputTransformation {
         originalValue: TextFieldCharSequence,
         valueWithChanges: TextFieldBuffer
     ) {
-        if (!valueWithChanges.toString().matches("\\d{1,7}(.\\d{0,4})?".toRegex())) {
+        if (valueWithChanges.toString().isEmpty()) {
+            valueWithChanges.replace(0, 0, "0")
+        }
+        if (!valueWithChanges.toString().matches("(\\d*.)?\\d+".toRegex())) {
             valueWithChanges.revertAllChanges()
         }
     }

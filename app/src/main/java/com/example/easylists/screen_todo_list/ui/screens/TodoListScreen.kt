@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,7 +33,6 @@ fun TodoListScreen(todoListViewModel: TodoListViewModel = hiltViewModel()) {
     val btnEnabler by remember {
         derivedStateOf { state.value.task.text.isNotEmpty() }
     }
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = Modifier
@@ -47,8 +45,7 @@ fun TodoListScreen(todoListViewModel: TodoListViewModel = hiltViewModel()) {
         ItemInputBar(
             textField = state.value.task,
             textPlaceholder = stringResource(id = R.string.new_task),
-            buttonEnabler = btnEnabler,
-            keyboardController = keyboardController
+            buttonEnabler = btnEnabler
         ) {
             todoListViewModel.addTask(TodoItem(task = state.value.task.text.toString()))
         }

@@ -66,7 +66,7 @@ fun SimListItem(
 
         // Down count button
         CustomIconButton(
-            imageVector = if (listItemCount > 0) Icons.Filled.KeyboardArrowDown
+            imageVector = if (listItemCount >= 1) Icons.Filled.KeyboardArrowDown
             else Icons.Filled.Delete,
             description = stringResource(id = R.string.down_button),
             onClick = { onDownButtonClick() })

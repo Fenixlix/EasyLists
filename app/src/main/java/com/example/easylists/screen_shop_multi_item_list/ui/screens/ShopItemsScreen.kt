@@ -19,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,7 +45,6 @@ fun ShopItemsScreen(shopMultiItemListViewModel: ShopMultiItemListViewModel = hil
             state.value.itemName.text.isNotEmpty() && state.value.itemPrice.text.isNotEmpty()
         }
     }
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     // ----- Parameters for the control of the AlertDialog -----
     val itemToUpdate = remember {
@@ -90,7 +88,6 @@ fun ShopItemsScreen(shopMultiItemListViewModel: ShopMultiItemListViewModel = hil
             numberField = state.value.itemPrice,
             buttonEnabler = btnEnabler,
             textPlaceholder = stringResource(id = R.string.item_name_placeholder),
-            keyboardController = keyboardController,
             onButtonClick = { shopMultiItemListViewModel.upsertShopMultiItem() }
         )
 

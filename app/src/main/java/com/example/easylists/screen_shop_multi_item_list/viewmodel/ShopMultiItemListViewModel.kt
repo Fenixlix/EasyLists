@@ -94,7 +94,7 @@ class ShopMultiItemListViewModel @Inject constructor(
                     quantity = shopItem.quantity + 1
                 )
             )
-        } else if (shopItem.quantity == 1) {
+        } else if (shopItem.quantity <= 1) {
             deleteShopMultiItem(shopItem)
         } else {
             totalPrice -= shopItem.price

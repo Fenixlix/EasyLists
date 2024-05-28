@@ -52,7 +52,7 @@ class ItemListViewModel @Inject constructor(
     fun upDownCount(item: SimpleItem, isUpCount: Boolean) = viewModelScope.launch {
         if (isUpCount) {
             itemListDao.upsertItem(item.copy(quantity = item.quantity + 1))
-        } else if (item.quantity == 1) {
+        } else if (item.quantity < 1) {
             deleteItem(item)
         } else {
             itemListDao.upsertItem(item.copy(quantity = item.quantity - 1))

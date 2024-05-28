@@ -17,7 +17,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +39,6 @@ fun SimpleListScreen(
             state.value.itemName.text.isNotEmpty()
         }
     }
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = Modifier
@@ -55,7 +53,6 @@ fun SimpleListScreen(
             numberField = state.value.itemQuantity,
             textPlaceholder = stringResource(id = R.string.item_name_placeholder),
             buttonEnabler = buttonEnabler.value,
-            keyboardController = keyboardController,
             onButtonClick = { simpleListViewModel.upsertItem() }
         )
 
