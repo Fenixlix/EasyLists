@@ -1,6 +1,4 @@
 package com.example.easylists.core_ui.theme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val md_theme_light_primary = Color(0xFF0061A2)
